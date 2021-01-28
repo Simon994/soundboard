@@ -6,7 +6,7 @@ function init() {
   const mouseMode = document.querySelector('#mouse')
   const btns = document.querySelectorAll('.btn')
 
-  keyboardMode.addEventListener('click', runKeyboardMode)
+  keyboardMode?.addEventListener('click', runKeyboardMode)
   mouseMode.addEventListener('click', runMouseMode)
   let mode
   let hue = 0
