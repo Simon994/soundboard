@@ -7,9 +7,9 @@ function init() {
   const btns = document.querySelectorAll('.btn')
 
   keyboardMode?.addEventListener('click', runKeyboardMode)
-  mouseMode.addEventListener('click', runMouseMode)
-  let mode
-  let hue = 0
+  mouseMode?.addEventListener('click', runMouseMode)
+  let mode: string
+  let hue: number = 0
 
   function modeToggle(modeTarget){
     modeTarget.classList.toggle('mode-active')
