@@ -2,8 +2,8 @@ function init() {
 
   
 
-  const keyboardMode = document.querySelector('#keyboard')
-  const mouseMode = document.querySelector('#mouse')
+  const keyboardMode = <HTMLElement>document.querySelector('#keyboard')
+  const mouseMode = <HTMLElement>document.querySelector('#mouse')
   const btns = document.querySelectorAll('.btn')
 
   keyboardMode?.addEventListener('click', runKeyboardMode)
@@ -11,9 +11,9 @@ function init() {
   let mode: string
   let hue: number = 0
 
-  function modeToggle(modeTarget){
+  function modeToggle(modeTarget: HTMLElement){
     modeTarget.classList.toggle('mode-active')
-    mode = `${modeTarget.id}`
+    mode = modeTarget.id
   }
 
   function runKeyboardMode(){
@@ -49,25 +49,28 @@ function init() {
   }  
 
   function playClip(event){
-    let audioToPlay = null
+    console.log(event)
+    let audioToPlay: HTMLAudioElement | null
     if (mode === 'keyboard') {
-      audioToPlay = document.querySelector(`audio[data-code="${event.code}"]`)
-    } 
-    if (mode === 'mouse') {
-      audioToPlay = document.querySelector(`audio[data-code="${event.target.dataset.code}"]`)
+      audioToPlay = <HTMLAudioElement>document.querySelector(`audio[data-code="${event.code}"]`)
+    } else if (mode === 'mouse') {
+      audioToPlay = <HTMLAudioElement>document.querySelector(`audio[data-code="${event.target.dataset.code}"]`)
+    } else {
+      return
     }
-    if (audioToPlay === null) return
     audioToPlay.play()
     audioToPlay.currentTime = 0
     pulseOnPlay(event)
   }
 
   function pulseOnPlay(event){
-    let btnToPulse = null
+    let btnToPulse: HTMLElement | null
     if (mode === 'keyboard'){
-      btnToPulse = document.querySelector(`div[data-code="${event.code}"]`)
+      btnToPulse = <HTMLElement>document.querySelector(`div[data-code="${event.code}"]`)
     } else if (mode === 'mouse') {
-      btnToPulse = document.querySelector(`div[data-code="${event.target.dataset.code}"]`)
+      btnToPulse = <HTMLElement>document.querySelector(`div[data-code="${event.target.dataset.code}"]`)
+    } else {
+      return
     }
     btnToPulse.classList.add('pulse')
     hue += 25
