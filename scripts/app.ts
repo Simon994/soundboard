@@ -4,7 +4,7 @@ function init() {
 
   const keyboardMode = <HTMLElement>document.querySelector('#keyboard')
   const mouseMode = <HTMLElement>document.querySelector('#mouse')
-  const btns = document.querySelectorAll('.btn')
+  const btns: NodeListOf<Element> = document.querySelectorAll('.btn')
 
   keyboardMode?.addEventListener('click', runKeyboardMode)
   mouseMode?.addEventListener('click', runMouseMode)
@@ -55,7 +55,6 @@ function init() {
         `audio[data-code="${(event as KeyboardEvent).code}"]`
         )
     } else if (mode === 'mouse') {
-      console.log(typeof event.target)
       audioToPlay = <HTMLAudioElement>document.querySelector(
         `audio[data-code="${(event.target as HTMLDivElement).dataset.code}"]`
         )
