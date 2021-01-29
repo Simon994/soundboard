@@ -48,13 +48,17 @@ function init() {
     }
   }  
 
-  function playClip(event){
-    console.log(event)
+  function playClip(event: KeyboardEvent | MouseEvent){
     let audioToPlay: HTMLAudioElement | null
     if (mode === 'keyboard') {
-      audioToPlay = <HTMLAudioElement>document.querySelector(`audio[data-code="${event.code}"]`)
+      audioToPlay = <HTMLAudioElement>document.querySelector(
+        `audio[data-code="${(event as KeyboardEvent).code}"]`
+        )
     } else if (mode === 'mouse') {
-      audioToPlay = <HTMLAudioElement>document.querySelector(`audio[data-code="${event.target.dataset.code}"]`)
+      console.log(typeof event.target)
+      audioToPlay = <HTMLAudioElement>document.querySelector(
+        `audio[data-code="${(event.target as HTMLDivElement).dataset.code}"]`
+        )
     } else {
       return
     }
@@ -63,12 +67,16 @@ function init() {
     pulseOnPlay(event)
   }
 
-  function pulseOnPlay(event){
+  function pulseOnPlay(event: KeyboardEvent | MouseEvent){
     let btnToPulse: HTMLElement | null
     if (mode === 'keyboard'){
-      btnToPulse = <HTMLElement>document.querySelector(`div[data-code="${event.code}"]`)
+      btnToPulse = <HTMLElement>document.querySelector(
+        `div[data-code="${(event as KeyboardEvent).code}"]`
+        )
     } else if (mode === 'mouse') {
-      btnToPulse = <HTMLElement>document.querySelector(`div[data-code="${event.target.dataset.code}"]`)
+      btnToPulse = <HTMLElement>document.querySelector(
+        `div[data-code="${(event.target as HTMLDivElement).dataset.code}"]`
+        )
     } else {
       return
     }
@@ -78,9 +86,9 @@ function init() {
     btnToPulse.style.borderColor = `hsl(${hue}, 100%, 50%)`
     btnToPulse.style.boxShadow = `0 10px 10px hsl(${hue}, 100%, 50%)`
     setTimeout(function () {
-      btnToPulse.classList.remove('pulse')
-      btnToPulse.style.borderColor = 'hsl(0, 100%, 0%)'
-      btnToPulse.style.boxShadow = 'none'
+      btnToPulse!.classList.remove('pulse')
+      btnToPulse!.style.borderColor = 'hsl(0, 100%, 0%)'
+      btnToPulse!.style.boxShadow = 'none'
     }, 300)
   }
 
